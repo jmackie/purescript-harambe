@@ -49,7 +49,7 @@ type Props_global r
     , spellcheck      :: Boolean
     , draggable       :: Boolean
     , lang            :: String
-    , dir             :: Dir          -- FIXME
+    , dir             :: Dir
     , hidden          :: Boolean
     , tabIndex        :: Int
     , accessKey       :: String

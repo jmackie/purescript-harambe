@@ -1,7 +1,7 @@
 { name =
     "my-project"
 , dependencies =
-    [ "effect", "web-html" ]
+    [ "effect", "web-html", "aff", "aff-promise" ]
 , packages =
     ./packages.dhall
 , sources =

@@ -1,7 +1,7 @@
 { name =
     "harambe-example"
 , dependencies =
-    [ "harambe" ]
+    [ "harambe", "console" ]
 , packages =
     ./packages.dhall
 , sources =
