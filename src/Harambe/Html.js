@@ -2,14 +2,7 @@
 
 var React = require("react");
 
-// forall action. String -> Html action
-exports.text = function(string) {
-  return function(_dispatch) {
-    return string;
-  };
-};
-
-exports.createElement = function(type) {
+exports.element = function(type) {
   return function(props) {
     return function(children) {
       return function(dispatch) {
@@ -36,17 +29,26 @@ exports.createElement = function(type) {
   };
 };
 
-exports.handle_ = function(action) {
-  var f = function(dispatch) {
-    return function(_event) {
-      return dispatch(action);
+// forall a b. (a -> b) -> Html a -> Html b
+exports.mapHtml = function(f) {
+  return function(html) {
+    return function(dispatch) {
+      return html(function(a) {
+        dispatch(f(a));
+      });
     };
   };
-  f.isEventHandler = true;
-  return f;
+};
+
+// forall a action. a -> Html action
+exports.unsafeToHtml = function(a) {
+  return function(_dispatch) {
+    return a;
+  };
 };
 
 // yolo
+// forall a b. a -> b
 exports.unsafeCoerce = function(a) {
   return a;
 };

@@ -14,6 +14,7 @@ import Web.HTML.HTMLElement (HTMLElement)
 import Harambe as Harambe
 import Harambe.Html (Html)
 import Harambe.Html as Html
+import Harambe.Event as Event
 
 main :: HTMLElement -> Effect Unit
 main =
@@ -56,7 +57,8 @@ render state =
       }
       [ Html.div
           { id: "niceee"
-          , onClick: Html.handle_ Increment
+          , onClick: Event.handle_ Increment
+          , title: show state.count
           }
           [ Html.text (show state.count) ]
       ]
