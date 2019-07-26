@@ -19,6 +19,10 @@ type Program state action
   = { initialState :: state
     , render       :: state -> Array (Html action)
     , reducer      :: state -> action -> state /\ Maybe (Aff action)
+
+    -- TODO:
+    --   - subscriptions
+    --   - ...?
     }
 
 run
