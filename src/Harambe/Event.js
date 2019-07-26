@@ -1,8 +1,8 @@
 "use-strict";
 
-// foreign import data Handler :: Type -> Type
+// foreign import data Handler :: Type -> Type -> Type
 
-// forall action. (Event -> action) -> Handler action
+// forall event action. (event -> action) -> Handler event action
 exports.handle = function(f) {
   var f = function(dispatch) {
     return function(syntheticEvent) {
@@ -15,7 +15,7 @@ exports.handle = function(f) {
   return f;
 };
 
-// forall action. action -> Handler action
+// forall event action. action -> Handler event action
 exports.handle_ = function(action) {
   var f = function(dispatch) {
     return function(_syntheticEvent) {
