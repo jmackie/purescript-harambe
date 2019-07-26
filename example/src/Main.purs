@@ -3,8 +3,7 @@ module Main (main) where
 import Prelude
 import Data.Maybe (Maybe(..))
 import Data.Time.Duration as Duration
-import Data.Tuple (Tuple)
-import Data.Tuple.Nested ((/\))
+import Data.Tuple.Nested (type (/\), (/\))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Aff as Aff
@@ -37,7 +36,7 @@ data Action
   = NoOp
   | Increment
 
-reducer :: State -> Action -> Tuple State (Maybe (Aff Action))
+reducer :: State -> Action -> State /\ Maybe (Aff Action)
 reducer state = case _ of
   NoOp ->
     state /\ Nothing

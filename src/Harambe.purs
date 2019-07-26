@@ -6,6 +6,7 @@ module Harambe
 import Prelude
 import Data.Maybe (Maybe, fromMaybe)
 import Data.Tuple (Tuple, fst, snd)
+import Data.Tuple.Nested (type (/\))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Web.HTML.HTMLElement (HTMLElement)
@@ -17,7 +18,7 @@ import Harambe.Html (Html)
 type Program state action
   = { initialState :: state
     , render       :: state -> Array (Html action)
-    , reducer      :: state -> action -> Tuple state (Maybe (Aff action))
+    , reducer      :: state -> action -> state /\ Maybe (Aff action)
     }
 
 run
