@@ -36,8 +36,9 @@ exports.mapHtml = function(f) {
   };
 };
 
+// :: Dir
 exports.ltr = "ltr";
-exports.rtl = "ltr";
+exports.rtl = "rtl";
 exports.auto = "auto";
 
 // forall a action. a -> Html action

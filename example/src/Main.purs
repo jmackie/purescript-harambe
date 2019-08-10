@@ -55,11 +55,15 @@ render state =
       { className: "test"
       , dir: Html.ltr
       }
-      [ Html.div
-          { id: "niceee"
-          , onClick: Event.handle_ Increment
-          , title: show state.count
-          }
-          [ Html.text (show state.count) ]
+      [ map (\_ -> Increment) (counter state)
       ]
   ]
+
+counter :: State -> Html Unit
+counter state =
+  Html.div
+    { id: "niceee"
+    , onClick: Event.handle_ unit
+    , title: show state.count
+    }
+    [ Html.text (show state.count) ]

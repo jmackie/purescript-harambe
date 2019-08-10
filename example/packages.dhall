@@ -8,8 +8,6 @@ let upstream =
 let overrides = {=}
 
 let additions =
-      { harambe =
-          mkPackage (./../spago.dhall).dependencies "../" "master"
-      }
+      { harambe = ./../spago.dhall as Location }
 
-in  upstream // overrides // additions
+in  upstream ⫽ overrides ⫽ additions
