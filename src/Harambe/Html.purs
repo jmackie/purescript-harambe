@@ -1,18 +1,10 @@
 -- https://github.com/slamdata/purescript-dom-indexed/blob/master/src/DOM/HTML/Indexed.purs
-module Harambe.Html
-  ( Html
-  , text
-  , element
-
-  , h1, h2, h3, h4, h5, h6
-  , div, p, hr, pre, blockquote
-  , span, a, code, em, strong, i, b, u, sub, sup, br
-
-  , Dir, ltr, rtl
-  ) where
+module Harambe.Html where
 
 import Prelude
 import Prim.Row (class Union)
+
+import Data.Function.Uncurried as Fn
 
 import Web.Clipboard.ClipboardEvent (ClipboardEvent) as Web
 import Web.Event.Event (Event) as Web
@@ -36,38 +28,38 @@ foreign import mapHtml :: forall a b. (a -> b) -> Html a -> Html b
 text :: forall action. String -> Html action
 text = unsafeToHtml
 
-foreign import element :: forall props action. String -> { | props } -> Array (Html action) -> Html action
+foreign import element :: forall props action. Fn.Fn3 String { | props } (Array (Html action)) (Html action)
 
 --------------------------------------------------------------------------------
 -- Headers
 
 h1 :: forall props x action. Union props x (Props_h1 action) => Record props -> Array (Html action) -> Html action
-h1 = element "h1"
+h1 props children = Fn.runFn3 element "h1" props children
 
 type Props_h1 action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 h2 :: forall props x action. Union props x (Props_h2 action) => Record props -> Array (Html action) -> Html action
-h2 = element "h2"
+h2 props children = Fn.runFn3 element "h2" props children
 
 type Props_h2 action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 h3 :: forall props x action. Union props x (Props_h3 action) => Record props -> Array (Html action) -> Html action
-h3 = element "h3"
+h3 props children = Fn.runFn3 element "h3" props children
 
 type Props_h3 action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 h4 :: forall props x action. Union props x (Props_h4 action) => Record props -> Array (Html action) -> Html action
-h4 = element "h4"
+h4 props children = Fn.runFn3 element "h4" props children
 
 type Props_h4 action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 h5 :: forall props x action. Union props x (Props_h5 action) => Record props -> Array (Html action) -> Html action
-h5 = element "h5"
+h5 props children = Fn.runFn3 element "h5" props children
 
 type Props_h5 action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 h6 :: forall props x action. Union props x (Props_h6 action) => Record props -> Array (Html action) -> Html action
-h6 = element "h6"
+h6 props children = Fn.runFn3 element "h6" props children
 
 type Props_h6 action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
@@ -75,27 +67,27 @@ type Props_h6 action = Interactive action ( onScroll :: Event.Handler Web.Event 
 -- Grouping content
 
 div :: forall props x action. Union props x (Props_div action) => Record props -> Array (Html action) -> Html action
-div = element "div"
+div props children = Fn.runFn3 element "div" props children
 
 type Props_div action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 p :: forall props x action. Union props x (Props_p action) => Record props -> Array (Html action) -> Html action
-p = element "p"
+p props children = Fn.runFn3 element "p" props children
 
 type Props_p action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 hr :: forall props x action. Union props x (Props_hr action) => Record props -> Array (Html action) -> Html action
-hr = element "hr"
+hr props children = Fn.runFn3 element "hr" props children
 
 type Props_hr action = Interactive action ()
 
 pre :: forall props x action. Union props x (Props_pre action) => Record props -> Array (Html action) -> Html action
-pre = element "pre"
+pre props children = Fn.runFn3 element "pre" props children
 
 type Props_pre action = Interactive action ( onScroll :: Event.Handler Web.Event action )
 
 blockquote :: forall props x action. Union props x (Props_blockquote action) => Record props -> Array (Html action) -> Html action
-blockquote = element "blockquote"
+blockquote props children = Fn.runFn3 element "blockquote" props children
 
 type Props_blockquote action = Interactive action ( cite :: String, onScroll :: Event.Handler Web.Event action )
 
@@ -103,12 +95,12 @@ type Props_blockquote action = Interactive action ( cite :: String, onScroll :: 
 -- Text
 
 span :: forall props x action. Union props x (Props_span action) => Record props -> Array (Html action) -> Html action
-span = element "span"
+span props children = Fn.runFn3 element "span" props children
 
 type Props_span action = Interactive action ()
 
 a :: forall props x action. Union props x (Props_a action) => Record props -> Array (Html action) -> Html action
-a = element "a"
+a props children = Fn.runFn3 element "a" props children
 
 type Props_a action
   = Interactive action
@@ -121,47 +113,47 @@ type Props_a action
   )
 
 code :: forall props x action. Union props x (Props_code action) => Record props -> Array (Html action) -> Html action
-code = element "code"
+code props children = Fn.runFn3 element "code" props children
 
 type Props_code action = Interactive action ()
 
 em :: forall props x action. Union props x (Props_em action) => Record props -> Array (Html action) -> Html action
-em = element "em"
+em props children = Fn.runFn3 element "em" props children
 
 type Props_em action = Interactive action ()
 
 strong :: forall props x action. Union props x (Props_strong action) => Record props -> Array (Html action) -> Html action
-strong = element "strong"
+strong props children = Fn.runFn3 element "strong" props children
 
 type Props_strong action = Interactive action ()
 
 i :: forall props x action. Union props x (Props_i action) => Record props -> Array (Html action) -> Html action
-i = element "i"
+i props children = Fn.runFn3 element "i" props children
 
 type Props_i action = Interactive action ()
 
 b :: forall props x action. Union props x (Props_b action) => Record props -> Array (Html action) -> Html action
-b = element "b"
+b props children = Fn.runFn3 element "b" props children
 
 type Props_b action = Interactive action ()
 
 u :: forall props x action. Union props x (Props_u action) => Record props -> Array (Html action) -> Html action
-u = element "u"
+u props children = Fn.runFn3 element "u" props children
 
 type Props_u action = Interactive action ()
 
 sub :: forall props x action. Union props x (Props_sub action) => Record props -> Array (Html action) -> Html action
-sub = element "sub"
+sub props children = Fn.runFn3 element "sub" props children
 
 type Props_sub action = Interactive action ()
 
 sup :: forall props x action. Union props x (Props_sup action) => Record props -> Array (Html action) -> Html action
-sup = element "sup"
+sup props children = Fn.runFn3 element "sup" props children
 
 type Props_sup action = Interactive action ()
 
 br :: forall props x action. Union props x (Props_br action) => Record props -> Array (Html action) -> Html action
-br = element "br"
+br props children = Fn.runFn3 element "br" props children
 
 type Props_br action = Noninteractive action ()
 
@@ -295,14 +287,9 @@ type Noninteractive action r
 
 foreign import data Dir :: Type
 
-ltr :: Dir
-ltr = unsafeCoerce "ltr"
-
-rtl :: Dir
-rtl = unsafeCoerce "ltr"
-
-auto :: Dir
-auto = unsafeCoerce "auto"
+foreign import ltr :: Dir
+foreign import rtl :: Dir
+foreign import auto :: Dir
 
 --------------------------------------------------------------------------------
 
@@ -311,5 +298,3 @@ type RowApply (f :: # Type -> # Type) (a :: # Type) = f a
 infixr 0 type RowApply as +
 
 foreign import unsafeToHtml :: forall a action. a -> Html action
-
-foreign import unsafeCoerce :: forall a b. a -> b

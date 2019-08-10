@@ -2,30 +2,26 @@
 
 var React = require("react");
 
-exports.element = function(type) {
-  return function(props) {
-    return function(children) {
-      return function(dispatch) {
-        var childrenWithDispatch = children.map(function(child) {
-          return child(dispatch);
-        });
+exports.element = function(type, props, children) {
+  return function(dispatch) {
+    var childrenWithDispatch = children.map(function(child) {
+      return child(dispatch);
+    });
 
-        var propsWithDispatch = Object.keys(props).reduce(function(obj, key) {
-          if (props[key].isEventHandler) {
-            obj[key] = props[key](dispatch);
-            return obj;
-          } else {
-            obj[key] = props[key];
-            return obj;
-          }
-        }, {});
+    var propsWithDispatch = Object.keys(props).reduce(function(obj, key) {
+      if (props[key].isEventHandler) {
+        obj[key] = props[key](dispatch);
+        return obj;
+      } else {
+        obj[key] = props[key];
+        return obj;
+      }
+    }, {});
 
-        return React.createElement.apply(
-          null,
-          [type, propsWithDispatch].concat(childrenWithDispatch)
-        );
-      };
-    };
+    return React.createElement.apply(
+      null,
+      [type, propsWithDispatch].concat(childrenWithDispatch)
+    );
   };
 };
 
@@ -40,15 +36,13 @@ exports.mapHtml = function(f) {
   };
 };
 
+exports.ltr = "ltr";
+exports.rtl = "ltr";
+exports.auto = "auto";
+
 // forall a action. a -> Html action
 exports.unsafeToHtml = function(a) {
   return function(_dispatch) {
     return a;
   };
-};
-
-// yolo
-// forall a b. a -> b
-exports.unsafeCoerce = function(a) {
-  return a;
 };
