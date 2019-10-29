@@ -13,6 +13,7 @@ import Web.HTML.HTMLElement (HTMLElement)
 import Control.Promise as Promise
 
 import Harambe.Html (Html)
+import Harambe.Internal.Context (Context, Dispatch, dispatchContext)
 
 -- | Description of a web application program thingy.
 type Program state action
@@ -30,7 +31,7 @@ run
    . Program state action
   -> HTMLElement
   -> Effect Unit
-run = runProgram translator
+run = _runProgram translator dispatchContext
 
 -- | Things that we need to send to javascript land to work with the `Program`
 -- | object.
@@ -49,9 +50,10 @@ translator =
   , promiseFromAff: Promise.fromAff
   }
 
-foreign import runProgram
+foreign import _runProgram
   :: forall state action
    . Translator
+  -> Context Dispatch
   -> Program state action
   -> HTMLElement
   -> Effect Unit
