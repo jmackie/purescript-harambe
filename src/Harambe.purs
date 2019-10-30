@@ -11,27 +11,22 @@ import Effect (Effect)
 import Effect.Aff (Aff)
 import Web.HTML.HTMLElement (HTMLElement)
 import Control.Promise as Promise
-
 import Harambe.Html (Html)
 import Harambe.Internal.Context (Context, Dispatch, dispatchContext)
 
 -- | Description of a web application program thingy.
 type Program state action
   = { initialState :: state
-    , render       :: state -> Array (Html action)
-    , reducer      :: state -> action -> state /\ Maybe (Aff action)
-
-    -- TODO:
-    --   - subscriptions
-    --   - ...?
+    , render :: state -> Array (Html action)
+    , reducer :: state -> action -> state /\ Maybe (Aff action)
     }
 
-run
-  :: forall state action
-   . Program state action
-  -> HTMLElement
-  -> Effect Unit
-run = _runProgram translator dispatchContext
+run ::
+  forall state action.
+  Program state action ->
+  HTMLElement ->
+  Effect Unit
+run = _runProgram dispatchContext translator
 
 -- | Things that we need to send to javascript land to work with the `Program`
 -- | object.
@@ -50,10 +45,10 @@ translator =
   , promiseFromAff: Promise.fromAff
   }
 
-foreign import _runProgram
-  :: forall state action
-   . Translator
-  -> Context Dispatch
-  -> Program state action
-  -> HTMLElement
-  -> Effect Unit
+foreign import _runProgram ::
+  forall state action.
+  Context Dispatch ->
+  Translator ->
+  Program state action ->
+  HTMLElement ->
+  Effect Unit

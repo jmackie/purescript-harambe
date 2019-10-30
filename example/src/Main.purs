@@ -10,7 +10,6 @@ import Effect.Aff as Aff
 import Effect.Class (liftEffect)
 import Effect.Console as Console
 import Web.HTML.HTMLElement (HTMLElement)
-
 import Harambe as Harambe
 import Harambe.Html (Html)
 import Harambe.Html as Html
@@ -39,15 +38,14 @@ data Action
 
 reducer :: State -> Action -> State /\ Maybe (Aff Action)
 reducer state = case _ of
-  NoOp ->
-    state /\ Nothing
-
+  NoOp -> state /\ Nothing
   Increment ->
-    state { count = state.count + 1 } /\ Just do
-      liftEffect (Console.log "Hello")
-      Aff.delay (Duration.Milliseconds 1000.0)
-      liftEffect (Console.log "World")
-      pure NoOp
+    state { count = state.count + 1 }
+      /\ Just do
+          liftEffect (Console.log "Hello")
+          Aff.delay (Duration.Milliseconds 1000.0)
+          liftEffect (Console.log "World")
+          pure NoOp
 
 render :: State -> Array (Html Action)
 render state =
@@ -55,15 +53,15 @@ render state =
       { className: "test"
       , dir: Html.ltr
       }
-      [ map (\_ -> Increment) (counter state)
+      [ counter Increment state
       ]
   ]
 
-counter :: State -> Html Unit
-counter state =
+counter :: Action -> State -> Html Action
+counter action state =
   Html.div
     { id: "niceee"
-    , onClick: Event.handle_ unit
+    , onClick: Event.handle (\_ -> action)
     , title: show state.count
     }
     [ Html.text (show state.count) ]

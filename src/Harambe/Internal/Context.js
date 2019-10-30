@@ -2,4 +2,4 @@
 
 var React = require("react");
 
-exports.dispatchContext = React.createContext(null)
+exports.dispatchContext = React.createContext(null);

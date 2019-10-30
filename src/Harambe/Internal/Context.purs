@@ -1,5 +1,8 @@
-module Harambe.Internal.Context (Context, Dispatch, dispatchContext) where
-
+module Harambe.Internal.Context
+  ( Context
+  , Dispatch
+  , dispatchContext
+  ) where
 
 foreign import data Context :: Type -> Type
 

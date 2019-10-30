@@ -17,7 +17,7 @@ PubSub.prototype.subscribe = function(handler) {
   this.handlers.push(handler);
 };
 
-function CreateRuntime(translator, context, program) {
+function NewRuntime(context, translator, program) {
   var pubsub = new PubSub();
 
   function reducer(state, action) {
@@ -44,26 +44,21 @@ function CreateRuntime(translator, context, program) {
 
     pubsub.subscribe(dispatch);
 
-    var elements = program.render(state).map(function(element) {
-      return element(dispatch);
-    });
-
+    var elements = program.render(state);
     return React.createElement.apply(
       null,
-      [context.Provider, { value: dispatch } ].concat(elements)
+      [context.Provider, { value: dispatch }].concat(elements)
     );
   };
 }
 
-exports._runProgram = function(translator) {
-  return function(context) {
+exports._runProgram = function(context) {
+  return function(translator) {
     return function(program) {
       return function(element) {
         return function() {
-          ReactDOM.render(
-            React.createElement(CreateRuntime(translator, program, context), null),
-            element
-          );
+          var runtime = NewRuntime(context, translator, program);
+          ReactDOM.render(React.createElement(runtime, null), element);
         };
       };
     };
